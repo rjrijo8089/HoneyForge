@@ -76,6 +76,8 @@ Data can be collected from:
 
 The collected events are normalized, correlated, enriched, and presented through AI-assisted dashboards.
 
+For the full architecture diagram showing the sensor-to-output data flow, see [docs/architecture.md](docs/architecture.md).
+
 ---
 
 # Navigation
