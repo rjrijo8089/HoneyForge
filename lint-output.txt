@@ -1,0 +1,642 @@
+﻿
+> honeyforge@0.1.0 lint
+> eslint
+
+
+E:\Honeypot\HoneyForge\app\(dashboard)\ai-intelligence-summary\page.tsx
+  5:3  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\app\(dashboard)\decoys\page.tsx
+  27:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\decoys\page.tsx:27:5
+  25 |   // Sync demo decoys when mode changes — local decoys (source='local') are preserved
+  26 |   useEffect(() => {
+> 27 |     setDecoys((prev) => {
+     |     ^^^^^^^^^ Avoid calling setState() directly within an effect
+  28 |       const local = prev.filter((d) => d.source !== 'demo')
+  29 |       return isDemoMode ? [...local, ...DEMO_DECOYS] : local
+  30 |     })  react-hooks/set-state-in-effect
+
+E:\Honeypot\HoneyForge\app\(dashboard)\live-attack-feed\page.tsx
+   5:3   warning  'LayoutList' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   5:15  warning  'LayoutGrid' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  61:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\live-attack-feed\page.tsx:61:5
+  59 |   /* ── Reset feed when mode changes ── */
+  60 |   useEffect(() => {
+> 61 |     setFeed(isDemoMode ? buildInitialFeed() : [])
+     |     ^^^^^^^ Avoid calling setState() directly within an effect
+  62 |     setSelected(null)
+  63 |     setNewIds(new Set())
+  64 |   }, [isDemoMode])  react-hooks/set-state-in-effect
+  83:6   warning  React Hook useEffect has a missing dependency: 'isDemoMode'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+
+E:\Honeypot\HoneyForge\app\(dashboard)\reports\page.tsx
+  42:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\reports\page.tsx:42:5
+  40 |
+  41 |   useEffect(() => {
+> 42 |     setReports(isDemoMode ? MOCK_REPORT_TEMPLATES as unknown as ReportTemplate[] : [])
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |   }, [isDemoMode])
+  44 |   const [selectedId,     setSelectedId]     = useState<string | null>(null)
+  45 |   const [scheduleTarget, setScheduleTarget] = useState<ReportTemplate | null>(null)  react-hooks/set-state-in-effect
+
+E:\Honeypot\HoneyForge\app\(dashboard)\review-queue\page.tsx
+   61:21   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\review-queue\page.tsx:61:21
+  59 |   const [incidents,   setIncidents]   = useState<AnalystIncident[]>(isDemoMode ? MOCK_INCIDENTS : [])
+  60 |
+> 61 |   useEffect(() => { setIncidents(isDemoMode ? MOCK_INCIDENTS : []) }, [isDemoMode])
+     |                     ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  62 |   const [selected,    setSelected]    = useState<AnalystIncident | null>(null)
+  63 |   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  64 |   const [filters,     setFilters]     = useState<IncidentFiltersState>(DEFAULT_INCIDENT_FILTERS)  react-hooks/set-state-in-effect
+   71:9    error    'result' is never reassigned. Use 'const' instead                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              prefer-const
+   85:13   error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\review-queue\page.tsx:85:13
+  83 |       if (filters.dateRange !== 'all') {
+  84 |         const cutoff: Record<string, number> = { '1h': 3600_000, '24h': 86400_000, '7d': 604800_000, '30d': 2592000_000 }
+> 85 |         if (Date.now() - new Date(inc.timestamp).getTime() > (cutoff[filters.dateRange] ?? 0)) return false
+     |             ^^^^^^^^^^ Cannot call impure function
+  86 |       }
+  87 |       return true
+  88 |     })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          react-hooks/purity
+  131:88   warning  '_notify' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  140:56   warning  '_type' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  140:71   warning  '_sev' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  140:85   warning  '_cond' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  140:100  warning  '_desc' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  207:57   warning  Expected an assignment or function call and instead saw an expression                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-expressions
+
+E:\Honeypot\HoneyForge\app\(dashboard)\threat-intel\page.tsx
+  52:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\app\(dashboard)\threat-intel\page.tsx:52:21
+  50 |   const [iocs,    setIocs]    = useState<IOC[]>(isDemoMode ? MOCK_IOCS : [])
+  51 |
+> 52 |   useEffect(() => { setIocs(isDemoMode ? MOCK_IOCS : []) }, [isDemoMode])
+     |                     ^^^^^^^ Avoid calling setState() directly within an effect
+  53 |   const [selectedIOC, setSelectedIOC] = useState<IOC | null>(null)
+  54 |
+  55 |   /* ── Filter logic ── */  react-hooks/set-state-in-effect
+
+E:\Honeypot\HoneyForge\app\api\reports\route.ts
+  4:27  warning  '_request' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\app\api\rules\route.ts
+  4:27  warning  '_request' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\ActionsSection.tsx
+  42:16  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\ActionsSection.tsx:42:16
+  40 |
+  41 |   const addToast = (message: string, success: boolean) => {
+> 42 |     const id = Date.now()
+     |                ^^^^^^^^^^ Cannot call impure function
+  43 |     setToasts((p) => [...p, { id, message, success }])
+  44 |     setTimeout(() => setToasts((p) => p.filter((t) => t.id !== id)), 4000)
+  45 |   }  react-hooks/purity
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx
+  72:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:72:18
+  70 |             <thead className="border-b border-hf-border/40">
+  71 |               <tr>
+> 72 |                 <Th col="rank"               label="Rank"        />
+     |                  ^^ This component is created during render
+  73 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left">Decoy</th>
+  74 |                 <Th col="riskScore"          label="Risk Score"  />
+  75 |                 <Th col="criticalEvents"     label="Critical"    />
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:43:14
+  41 |   }
+  42 |
+> 43 |   const Th = ({ col, label }: { col: SortKey; label: string }) => (
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     <th
+     | ^^^^^^^
+> 45 |       onClick={() => toggleSort(col)}
+     …
+     | ^^^^^^^
+> 52 |     </th>
+     | ^^^^^^^
+> 53 |   )
+     | ^^^^ The component is created during render here
+  54 |
+  55 |   return (
+  56 |     <div className="space-y-4">                                                                                                                                                                                                                                              react-hooks/static-components
+  74:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:74:18
+  72 |                 <Th col="rank"               label="Rank"        />
+  73 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left">Decoy</th>
+> 74 |                 <Th col="riskScore"          label="Risk Score"  />
+     |                  ^^ This component is created during render
+  75 |                 <Th col="criticalEvents"     label="Critical"    />
+  76 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">High</th>
+  77 |                 <Th col="malwareAttempts"    label="Malware"     />
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:43:14
+  41 |   }
+  42 |
+> 43 |   const Th = ({ col, label }: { col: SortKey; label: string }) => (
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     <th
+     | ^^^^^^^
+> 45 |       onClick={() => toggleSort(col)}
+     …
+     | ^^^^^^^
+> 52 |     </th>
+     | ^^^^^^^
+> 53 |   )
+     | ^^^^ The component is created during render here
+  54 |
+  55 |   return (
+  56 |     <div className="space-y-4">                                                                                                             react-hooks/static-components
+  75:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:75:18
+  73 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left">Decoy</th>
+  74 |                 <Th col="riskScore"          label="Risk Score"  />
+> 75 |                 <Th col="criticalEvents"     label="Critical"    />
+     |                  ^^ This component is created during render
+  76 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">High</th>
+  77 |                 <Th col="malwareAttempts"    label="Malware"     />
+  78 |                 <Th col="credentialAttempts" label="Credentials" />
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:43:14
+  41 |   }
+  42 |
+> 43 |   const Th = ({ col, label }: { col: SortKey; label: string }) => (
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     <th
+     | ^^^^^^^
+> 45 |       onClick={() => toggleSort(col)}
+     …
+     | ^^^^^^^
+> 52 |     </th>
+     | ^^^^^^^
+> 53 |   )
+     | ^^^^ The component is created during render here
+  54 |
+  55 |   return (
+  56 |     <div className="space-y-4">                                                                                                             react-hooks/static-components
+  77:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:77:18
+  75 |                 <Th col="criticalEvents"     label="Critical"    />
+  76 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">High</th>
+> 77 |                 <Th col="malwareAttempts"    label="Malware"     />
+     |                  ^^ This component is created during render
+  78 |                 <Th col="credentialAttempts" label="Credentials" />
+  79 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">Business Impact</th>
+  80 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">Last Event</th>
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:43:14
+  41 |   }
+  42 |
+> 43 |   const Th = ({ col, label }: { col: SortKey; label: string }) => (
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     <th
+     | ^^^^^^^
+> 45 |       onClick={() => toggleSort(col)}
+     …
+     | ^^^^^^^
+> 52 |     </th>
+     | ^^^^^^^
+> 53 |   )
+     | ^^^^ The component is created during render here
+  54 |
+  55 |   return (
+  56 |     <div className="space-y-4">  react-hooks/static-components
+  78:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:78:18
+  76 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">High</th>
+  77 |                 <Th col="malwareAttempts"    label="Malware"     />
+> 78 |                 <Th col="credentialAttempts" label="Credentials" />
+     |                  ^^ This component is created during render
+  79 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">Business Impact</th>
+  80 |                 <th className="text-[9px] font-bold uppercase tracking-widest text-hf-dim px-3 py-2.5 text-left whitespace-nowrap">Last Event</th>
+  81 |               </tr>
+
+E:\Honeypot\HoneyForge\components\ai-intelligence\DecoyRankingSection.tsx:43:14
+  41 |   }
+  42 |
+> 43 |   const Th = ({ col, label }: { col: SortKey; label: string }) => (
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 44 |     <th
+     | ^^^^^^^
+> 45 |       onClick={() => toggleSort(col)}
+     …
+     | ^^^^^^^
+> 52 |     </th>
+     | ^^^^^^^
+> 53 |   )
+     | ^^^^ The component is created during render here
+  54 |
+  55 |   return (
+  56 |     <div className="space-y-4">                                                  react-hooks/static-components
+
+E:\Honeypot\HoneyForge\components\analyst-workflow\BulkActionBar.tsx
+  4:10  warning  'cn' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\analyst-workflow\CommentThread.tsx
+  5:13  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+  5:27  warning  'XCircle' is defined but never used       @typescript-eslint/no-unused-vars
+  5:36  warning  'AlertOctagon' is defined but never used  @typescript-eslint/no-unused-vars
+  5:50  warning  'Archive' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\analyst-workflow\IncidentDetail.tsx
+  4:13  warning  'Server' is defined but never used  @typescript-eslint/no-unused-vars
+  4:53  warning  'Clock' is defined but never used   @typescript-eslint/no-unused-vars
+  5:15  warning  'MapPin' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx
+   78:21  warning  'col' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  145:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:145:16
+  143 |           <thead className="bg-hf-surface-2/80 border-b border-hf-border/40">
+  144 |             <tr>
+> 145 |               <Header col="timestamp" label="Timestamp" />
+      |                ^^^^^^ This component is created during render
+  146 |               <Header col="userEmail" label="Actor" />
+  147 |               <th className={TH}>Role</th>
+  148 |               <Header col="action"   label="Action" />
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:121:18
+  119 |   const paged      = sorted.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+  120 |
+> 121 |   const Header = ({ col, label }: { col: SortKey; label: string }) => (
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     <th className={cn(TH, 'cursor-pointer select-none hover:text-hf-muted')} onClick={() => toggleSort(col)}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       <div className="flex items-center gap-1">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |         {label}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |         <SortIcon col={col} active={sortKey === col} dir={sortDir} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 126 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |     </th>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |   )
+      | ^^^^ The component is created during render here
+  129 |
+  130 |   if (logs.length === 0) {
+  131 |     return (  react-hooks/static-components
+  146:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:146:16
+  144 |             <tr>
+  145 |               <Header col="timestamp" label="Timestamp" />
+> 146 |               <Header col="userEmail" label="Actor" />
+      |                ^^^^^^ This component is created during render
+  147 |               <th className={TH}>Role</th>
+  148 |               <Header col="action"   label="Action" />
+  149 |               <th className={TH}>Resource</th>
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:121:18
+  119 |   const paged      = sorted.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+  120 |
+> 121 |   const Header = ({ col, label }: { col: SortKey; label: string }) => (
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     <th className={cn(TH, 'cursor-pointer select-none hover:text-hf-muted')} onClick={() => toggleSort(col)}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       <div className="flex items-center gap-1">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |         {label}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |         <SortIcon col={col} active={sortKey === col} dir={sortDir} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 126 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |     </th>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |   )
+      | ^^^^ The component is created during render here
+  129 |
+  130 |   if (logs.length === 0) {
+  131 |     return (                                 react-hooks/static-components
+  148:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:148:16
+  146 |               <Header col="userEmail" label="Actor" />
+  147 |               <th className={TH}>Role</th>
+> 148 |               <Header col="action"   label="Action" />
+      |                ^^^^^^ This component is created during render
+  149 |               <th className={TH}>Resource</th>
+  150 |               <th className={TH}>Source IP</th>
+  151 |               <Header col="outcome"   label="Outcome" />
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:121:18
+  119 |   const paged      = sorted.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+  120 |
+> 121 |   const Header = ({ col, label }: { col: SortKey; label: string }) => (
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     <th className={cn(TH, 'cursor-pointer select-none hover:text-hf-muted')} onClick={() => toggleSort(col)}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       <div className="flex items-center gap-1">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |         {label}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |         <SortIcon col={col} active={sortKey === col} dir={sortDir} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 126 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |     </th>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |   )
+      | ^^^^ The component is created during render here
+  129 |
+  130 |   if (logs.length === 0) {
+  131 |     return (    react-hooks/static-components
+  151:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:151:16
+  149 |               <th className={TH}>Resource</th>
+  150 |               <th className={TH}>Source IP</th>
+> 151 |               <Header col="outcome"   label="Outcome" />
+      |                ^^^^^^ This component is created during render
+  152 |               <Header col="riskLevel" label="Risk" />
+  153 |               <th className={TH}>Details</th>
+  154 |             </tr>
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:121:18
+  119 |   const paged      = sorted.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+  120 |
+> 121 |   const Header = ({ col, label }: { col: SortKey; label: string }) => (
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     <th className={cn(TH, 'cursor-pointer select-none hover:text-hf-muted')} onClick={() => toggleSort(col)}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       <div className="flex items-center gap-1">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |         {label}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |         <SortIcon col={col} active={sortKey === col} dir={sortDir} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 126 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |     </th>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |   )
+      | ^^^^ The component is created during render here
+  129 |
+  130 |   if (logs.length === 0) {
+  131 |     return (                                       react-hooks/static-components
+  152:16  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:152:16
+  150 |               <th className={TH}>Source IP</th>
+  151 |               <Header col="outcome"   label="Outcome" />
+> 152 |               <Header col="riskLevel" label="Risk" />
+      |                ^^^^^^ This component is created during render
+  153 |               <th className={TH}>Details</th>
+  154 |             </tr>
+  155 |           </thead>
+
+E:\Honeypot\HoneyForge\components\audit\AuditTable.tsx:121:18
+  119 |   const paged      = sorted.slice(page * PER_PAGE, (page + 1) * PER_PAGE)
+  120 |
+> 121 |   const Header = ({ col, label }: { col: SortKey; label: string }) => (
+      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 122 |     <th className={cn(TH, 'cursor-pointer select-none hover:text-hf-muted')} onClick={() => toggleSort(col)}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 123 |       <div className="flex items-center gap-1">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 124 |         {label}
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 125 |         <SortIcon col={col} active={sortKey === col} dir={sortDir} />
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 126 |       </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |     </th>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |   )
+      | ^^^^ The component is created during render here
+  129 |
+  130 |   if (logs.length === 0) {
+  131 |     return (                                                                   react-hooks/static-components
+
+E:\Honeypot\HoneyForge\components\audit\AuditTimeline.tsx
+   1:14  warning  'formatDate' is defined but never used  @typescript-eslint/no-unused-vars
+  89:34  warning  'idx' is defined but never used         @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\charts\BarChart.tsx
+  4:41  warning  'Cell' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\clone-studio\StepCloneSource.tsx
+  3:23  warning  'ChevronDown' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\clone-studio\StepDecoyConfig.tsx
+  28:10  warning  'SelectField' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\clone-studio\WizardSidebar.tsx
+  30:25  warning  'idx' is defined but never used            @typescript-eslint/no-unused-vars
+  34:15  warning  'Icon' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\dashboard\AttackTrend.tsx
+   3:24  warning  'Line' is defined but never used          @typescript-eslint/no-unused-vars
+   4:33  warning  'Legend' is defined but never used        @typescript-eslint/no-unused-vars
+   6:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+  23:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  25:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:24  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Honeypot\HoneyForge\components\dashboard\AttackTypeBar.tsx
+  19:26  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\dashboard\IOCFeed.tsx
+  1:17  warning  'Link2' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\dashboard\NotificationFeed.tsx
+  32:6  warning  React Hook useEffect has missing dependencies: 'addNotification' and 'notifications.length'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+E:\Honeypot\HoneyForge\components\dashboard\RecentAttacks.tsx
+  42:33  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\dashboard\SeverityDonut.tsx
+   3:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+  15:45  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\Honeypot\HoneyForge\components\dashboard\TopDecoys.tsx
+   1:10  warning  'cn' is defined but never used  @typescript-eslint/no-unused-vars
+  30:26  warning  'i' is defined but never used   @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\decoys\CreateDecoyModal.tsx
+  4:32  warning  'FolderOpen' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\decoys\DecoyDetailDrawer.tsx
+  4:44  warning  'Cpu' is defined but never used        @typescript-eslint/no-unused-vars
+  4:49  warning  'HardDrive' is defined but never used  @typescript-eslint/no-unused-vars
+  5:3   warning  'Calendar' is defined but never used   @typescript-eslint/no-unused-vars
+  5:18  warning  'Server' is defined but never used     @typescript-eslint/no-unused-vars
+  5:41  warning  'Hash' is defined but never used       @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\decoys\DecoyOverview.tsx
+  1:18  warning  'Play' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\decoys\DecoyTable.tsx
+   4:29  warning  'MoreHorizontal' is defined but never used        @typescript-eslint/no-unused-vars
+  76:10  warning  'openMenu' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  76:20  warning  'setOpenMenu' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\detection-rules\CreateRuleModal.tsx
+  3:19  warning  'ChevronDown' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\detection-rules\RuleDetailDrawer.tsx
+  6:8   warning  'ChevronDown' is defined but never used   @typescript-eslint/no-unused-vars
+  6:21  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\live-feed\FeedTable.tsx
+  2:29  warning  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\live-feed\TopStats.tsx
+  106:37  warning  'country' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\settings\DataRetentionTab.tsx
+  26:9  warning  'pct' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\settings\shared.tsx
+  3:17  warning  'Loader2' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\CampaignList.tsx
+  3:42  warning  'Activity' is defined but never used       @typescript-eslint/no-unused-vars
+  6:10  warning  'ConfidenceBar' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\IOCDetailDrawer.tsx
+  4:34  warning  'ExternalLink' is defined but never used   @typescript-eslint/no-unused-vars
+  5:44  warning  'Globe' is defined but never used          @typescript-eslint/no-unused-vars
+  5:51  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+  8:10  warning  'Button' is defined but never used         @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\IOCFilters.tsx
+  6:24  warning  'IOC_TYPE_META' is defined but never used  @typescript-eslint/no-unused-vars
+  8:36  warning  'IOCStatus' is defined but never used      @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\IOCTable.tsx
+  3:61  warning  'MoreHorizontal' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\RelationshipGraph.tsx
+  3:10  warning  'cn' is defined but never used             @typescript-eslint/no-unused-vars
+  4:10  warning  'IOC_TYPE_META' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\components\threat-intel\ThreatIntelStats.tsx
+  1:41  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+  1:55  warning  'Clock' is defined but never used         @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\contexts\DataModeContext.tsx
+  26:26  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+E:\Honeypot\HoneyForge\contexts\DataModeContext.tsx:26:26
+  24 |   useEffect(() => {
+  25 |     const stored = localStorage.getItem(DEMO_STORAGE_KEY)
+> 26 |     if (stored !== null) setIsDemoMode(stored === 'true')
+     |                          ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  27 |   }, [])
+  28 |
+  29 |   const setDemoMode = useCallback((v: boolean) => {  react-hooks/set-state-in-effect
+
+E:\Honeypot\HoneyForge\lib\auth\helpers.ts
+  50:21  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\middleware.ts
+  7:34  warning  '_request' is defined but never used  @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\scripts\gen-audit.js
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Honeypot\HoneyForge\scripts\gen-integrations.js
+  2:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Honeypot\HoneyForge\scripts\gen-live-feed.js
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Honeypot\HoneyForge\scripts\gen-reports.js
+   2:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   3:14  error    A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  34:10  warning  'dailyTrend' is defined but never used   @typescript-eslint/no-unused-vars
+
+E:\Honeypot\HoneyForge\scripts\gen-rules.js
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+E:\Honeypot\HoneyForge\store\notificationStore.ts
+  17:69  warning  'get' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 105 problems (33 errors, 72 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
