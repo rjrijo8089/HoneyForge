@@ -29,6 +29,20 @@ Unlike traditional honeypot dashboards that simply collect logs, HoneyForge tran
 
 ---
 
+# Documentation
+
+| Guide | Description |
+|---|---|
+| [Local Setup Guide](docs/LOCAL_SETUP_GUIDE.md) | Clone, install, and run HoneyForge locally |
+| [Supabase Setup](docs/SUPABASE_SETUP.md) | Configure authentication and PostgreSQL database |
+| [Vercel Deployment](docs/VERCEL_DEPLOYMENT.md) | Deploy to Vercel for cloud hosting |
+| [Architecture](docs/architecture.md) | Platform architecture and component overview |
+| [Security Policy](SECURITY.md) | Vulnerability reporting and security guidelines |
+
+Demo mode runs without any external services or API keys.
+
+---
+
 # Platform Objectives
 
 HoneyForge is designed to help security teams:
